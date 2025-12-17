@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import jakarta.validation.valid;
 import com.example.demo.entity.*;
 import com.example.demo.service.*;
