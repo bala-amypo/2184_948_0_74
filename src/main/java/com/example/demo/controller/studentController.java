@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 
 import org.springframework.web.bind.annotation.RestController;
-
+import jakarta.validation.valid;
 import com.example.demo.entity.*;
 import com.example.demo.service.*;
 
@@ -16,5 +16,10 @@ public class studentController {
     @GetMapping("/getAllStudent")
     public List<studentEntity> getAll(){
         return service.getAll();
+    }
+
+    @PostMapping("/add")
+    public studentEntity addStudent(@Valid @RequestBody studentEntity student ){
+        return service.addStudent(student);
     }
 }
