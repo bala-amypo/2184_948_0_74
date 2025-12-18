@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.demo.entity.*;
 import com.example.demo.service.*;
 
+@RequstMapping("/student")
 @RestController
 public class studentController {
 
@@ -24,5 +25,9 @@ public class studentController {
     public studentEntity addStudent(@Valid  @RequestBody studentEntity student ){
         return service.addStudent(student);
     }
+
+    @GetMapping("/get{}")
+    public studentEntity getbyId()
+
     
 }
