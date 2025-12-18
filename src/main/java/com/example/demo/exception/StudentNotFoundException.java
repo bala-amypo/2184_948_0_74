@@ -1,3 +1,5 @@
 package com.example.demo.exception;
 
-import io.swagger
+public class StudenetNotFoundException extends RuntimeException{
+    
+}
