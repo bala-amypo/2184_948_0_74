@@ -35,6 +35,9 @@ public class studentServiceImpl implements studentService {
 
     }
 
-    public studentEntity getbyId(Long id);
+    public studentEntity deleteByID(Long id){
+        studentEntity data = getById(id);
+        return repo.deleteByID(id)
+    }
 
 }
