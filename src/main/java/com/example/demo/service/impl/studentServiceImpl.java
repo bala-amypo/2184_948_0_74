@@ -29,7 +29,10 @@ public class studentServiceImpl implements studentService {
         return repo.findById(id).orElseThrow(() -> new StudentNotFoundException(errMsg :"student id not found"))
     }
     public studentEntity updateBy(Long id,studentEntity newstu){
-        return repo.
+        studentEntity existing = getbyId(id)
+        newstu.setId(existing.getId());
+        return repo.save(newstu);
+
     }
 
 }
