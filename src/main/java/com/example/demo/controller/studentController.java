@@ -1,29 +1,28 @@
 package com.example.demo.controller;
 
 import java.util.List;
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import jakarta.validation.Valid;
-
-import com.example.demo.entity.studentEntity;
-import com.example.demo.service.studentService;
+import com.example.demo.entity.*;
+import com.example.demo.service.*;
 
 @RestController
-@RequestMapping("/student")
 public class studentController {
 
     @Autowired
-    private studentService service;
+    StudentService service;
 
-    @GetMapping("/getAll")
-    public List<studentEntity> getAll() {
+    @GetMapping("/getAllStudent")
+    public List<studentEntity> getAll(){
         return service.getAll();
     }
 
     @PostMapping("/add")
-    public studentEntity addStudent(@Valid @RequestBody studentEntity student) {
+    public studentEntity addStudent(@Valid  @RequestBody studentEntity student ){
         return service.addStudent(student);
     }
+    
 }
