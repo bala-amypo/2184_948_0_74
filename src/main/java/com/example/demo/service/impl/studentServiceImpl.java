@@ -8,37 +8,40 @@ import org.springframework.stereotype.Service;
 import com.example.demo.entity.studentEntity;
 import com.example.demo.repository.studentRepo;
 import com.example.demo.service.studentService;
-
-import com.example.demo.exception.*;
+import com.example.demo.exception.StudentNotFoundException;
 
 @Service
 public class studentServiceImpl implements studentService {
 
     @Autowired
-    studentRepo repo;
+    private studentRepo repo;
 
+    @Override
     public List<studentEntity> getAll() {
         return repo.findAll();
     }
 
+    @Override
     public studentEntity addStudent(studentEntity student) {
         return repo.save(student);
     }
 
-    public studentEntity getbyId(Long id){
-        return repo.findById(id).orElseThrow(() -> new StudentNotFoundException("student id not found"));
+    @Override
+    public studentEntity getbyId(Long id) {
+        return repo.findById(id)
+                .orElseThrow(() -> new StudentNotFoundException("Student id not found"));
     }
-    public studentEntity updateBy(Long id,studentEntity newstu){
+
+    @Override
+    public studentEntity updateBy(Long id, studentEntity newstu) {
         studentEntity existing = getbyId(id);
         newstu.setId(existing.getId());
         return repo.save(newstu);
-
     }
 
-    public studentEntity deletebyId(Long id){
-        studentEntity data = getbyId(id);
-        return repo.deletebyId(id);
-        return "Deleted Successfully !";
+    @Override
+    public void deleteByID(Long id) {
+        studentEntity existing = getbyId(id);
+        repo.deleteById(id);
     }
-
 }

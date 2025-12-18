@@ -1,47 +1,47 @@
-package com.example.demo.service.impl;
+package com.example.demo.controller;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.entity.studentEntity;
-import com.example.demo.repository.studentRepo;
 import com.example.demo.service.studentService;
-import com.example.demo.exception.StudentNotFoundException;
 
-@Service
-public class studentServiceImpl implements studentService {
+@RestController
+@RequestMapping("/student")
+public class studentController {
 
     @Autowired
-    private studentRepo repo;
+    private studentService service;
 
-    @Override
+    @GetMapping("/getAllStudent")
     public List<studentEntity> getAll() {
-        return repo.findAll();
+        return service.getAll();
     }
 
-    @Override
-    public studentEntity addStudent(studentEntity student) {
-        return repo.save(student);
+    @PostMapping("/add")
+    public studentEntity addStudent(@Valid @RequestBody studentEntity student) {
+        return service.addStudent(student);
     }
 
-    @Override
-    public studentEntity getbyId(Long id) {
-        return repo.findById(id)
-                .orElseThrow(() -> new StudentNotFoundException("Student id not found"));
+    @GetMapping("/get/{id}")
+    public studentEntity getById(@PathVariable Long id) {
+        return service.getById(id);
     }
 
-    @Override
-    public studentEntity updateBy(Long id, studentEntity newstu) {
-        studentEntity existing = getbyId(id);
-        newstu.setId(existing.getId());
-        return repo.save(newstu);
+    @PutMapping("/update/{id}")
+    public studentEntity updateById(
+            @PathVariable Long id,
+            @Valid @RequestBody studentEntity newstu) {
+        return service.updateById(id, newstu);
     }
 
-    @Override
-    public void deleteByID(Long id) {
-        studentEntity existing = getbyId(id);
-        repo.deleteById(id);
+    @DeleteMapping("/delete/{id}")
+    public String deleteById(@PathVariable Long id) {
+        service.deleteById(id);
+        return "Deleted Successfully!";
     }
 }

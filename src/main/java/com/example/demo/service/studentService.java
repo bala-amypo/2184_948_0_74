@@ -11,8 +11,8 @@ public interface studentService {
 
     studentEntity getbyId(Long id);
 
-    studentEntity updateBy(Long id,studentEntity newstu);
+    studentEntity updateById(Long id,studentEntity newstu);
     
-    studentEntity deleteByID(Long id);
+    studentEntity deleteById(Long id);
 
 }
