@@ -9,10 +9,9 @@ public interface studentService {
 
     studentEntity addStudent(studentEntity student);
 
-    studentEntity getbyId(Long id);
+    studentEntity getById(Long id);
 
-    studentEntity updateById(Long id,studentEntity newstu);
-    
-    studentEntity deleteById(Long id);
+    studentEntity updateById(Long id, studentEntity newstu);
 
+    void deleteById(Long id);
 }

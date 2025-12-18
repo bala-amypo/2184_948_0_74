@@ -27,21 +27,21 @@ public class studentServiceImpl implements studentService {
     }
 
     @Override
-    public studentEntity getbyId(Long id) {
+    public studentEntity getById(Long id) {
         return repo.findById(id)
                 .orElseThrow(() -> new StudentNotFoundException("Student id not found"));
     }
 
     @Override
-    public studentEntity updateBy(Long id, studentEntity newstu) {
-        studentEntity existing = getbyId(id);
+    public studentEntity updateById(Long id, studentEntity newstu) {
+        studentEntity existing = getById(id);
         newstu.setId(existing.getId());
         return repo.save(newstu);
     }
 
     @Override
-    public void deleteByID(Long id) {
-        studentEntity existing = getbyId(id);
+    public void deleteById(Long id) {
+        getById(id); // validate existence
         repo.deleteById(id);
     }
 }
