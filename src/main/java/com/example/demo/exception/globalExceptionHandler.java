@@ -18,15 +18,13 @@ public class globalExceptionHandler {
 
         Map<String, String> errors = new HashMap<>();
 
-        ex.getBindingResult().getFieldErrors().forEach(err ->
-            errors.put(err.getField(), err.getDefaultMessage())
-        );
+        ex.getBindingResult().getFieldErrors().forEach(err ->errors.put(err.getField(), err.getDefaultMessage()));
 
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(StudentNotFoundException.class)
     public ResponseEntity<String> handleStudentNotValid(StudentNotFoundException ex){
-        return ResponseEntity<>(ex.getMessage()HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(ex.getMessage()HttpStatus.NOT_FOUND);
     }
 }
