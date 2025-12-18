@@ -9,19 +9,24 @@ import com.example.demo.entity.studentEntity;
 import com.example.demo.repository.studentRepo;
 import com.example.demo.service.studentService;
 
+import com.example.demo.exception.*;
+
 @Service
 public class studentServiceImpl implements studentService {
 
     @Autowired
     studentRepo repo;
 
-    @Override
     public List<studentEntity> getAll() {
         return repo.findAll();
     }
 
-    @Override
     public studentEntity addStudent(studentEntity student) {
         return repo.save(student);
     }
+
+    public studentEntity getbyId(Long Id){
+        return repo.findById(id).orElseThrow(() -> new StudentNotFoundException("student id not found"))
+    }
+
 }
