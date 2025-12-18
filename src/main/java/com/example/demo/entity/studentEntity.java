@@ -17,9 +17,7 @@ public class studentEntity {
     @Email(message = "Email format is not valid")
     private String email;
 
-    // No-arg constructor (required by JPA)
-    public studentEntity() {
-    }
+    public studentEntity() {}
 
     public studentEntity(Long id, String name, String email) {
         this.id = id;
@@ -27,7 +25,6 @@ public class studentEntity {
         this.email = email;
     }
 
-    // Getters & Setters
     public Long getId() {
         return id;
     }

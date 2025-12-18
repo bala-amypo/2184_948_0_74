@@ -1,16 +1,26 @@
 package com.example.demo.exception;
 
-import org.springframework.web.bind.annotation.*;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class studentController{
-    @exceptionHandler(MethodArgumentNotValidException.class)
-    public ResponceEntity<?> handleFieldError(MethodArgumentNotValidException ex){
-        Map<String,String> error = new HashMap<>();
+public class globalExceptionHandler {
 
-        ex.getBindingData().getFieldError().forWach(err -> error.put(ex.getField(),ex.getField(),ex.getDefaultMessage()));
-    
-        return new ResponceEntity<>(error.HttpStatus.BAD_REQUEST);
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, String>> handleFieldError(MethodArgumentNotValidException ex) {
+
+        Map<String, String> errors = new HashMap<>();
+
+        ex.getBindingResult().getFieldErrors().forEach(err -> {
+            errors.put(err.getField(), err.getDefaultMessage());
+        });
+
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
 }

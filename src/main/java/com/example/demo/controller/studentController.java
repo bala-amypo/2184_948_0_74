@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import jakarta.validation.Valid;
 
 import com.example.demo.entity.studentEntity;
-import com.example.demo.service.StudentService;
+import com.example.demo.service.studentService;
 
 @RestController
 @RequestMapping("/student")
