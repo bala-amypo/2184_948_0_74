@@ -1,46 +1,47 @@
-package com.example.demo.controller;
+package com.example.demo.service.impl;
 
 import java.util.List;
 
-import jakarta.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.studentEntity;
+import com.example.demo.repository.studentRepo;
 import com.example.demo.service.studentService;
+import com.example.demo.exception.StudentNotFoundException;
 
-@RestController
-@RequestMapping("/student")
-public class studentController {
+@Service
+public class studentServiceImpl implements studentService {
 
     @Autowired
-    private studentService service;
+    private studentRepo repo;
 
-    @GetMapping("/getAllStudent")
+    @Override
     public List<studentEntity> getAll() {
-        return service.getAll();
+        return repo.findAll();
     }
 
-    @PostMapping("/add")
-    public studentEntity addStudent(@Valid @RequestBody studentEntity student) {
-        return service.addStudent(student);
+    @Override
+    public studentEntity addStudent(studentEntity student) {
+        return repo.save(student);
     }
 
-    @GetMapping("/get/{id}")
-    public studentEntity getbyId(@PathVariable Long id) {
-        return service.getbyId(id);
+    @Override
+    public studentEntity getbyId(Long id) {
+        return repo.findById(id)
+                .orElseThrow(() -> new StudentNotFoundException("Student id not found"));
     }
 
-    @PutMapping("/update/{id}")
-    public studentEntity updateBy(@PathVariable Long id,
-                                  @Valid @RequestBody studentEntity newstu) {
-        return service.updateBy(id, newstu);
+    @Override
+    public studentEntity updateBy(Long id, studentEntity newstu) {
+        studentEntity existing = getbyId(id);
+        newstu.setId(existing.getId());
+        return repo.save(newstu);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public String deleteByID(@PathVariable Long id) {
-        service.deleteByID(id);
-        return "Deleted Successfully!";
+    @Override
+    public void deleteByID(Long id) {
+        studentEntity existing = getbyId(id);
+        repo.deleteById(id);
     }
 }
