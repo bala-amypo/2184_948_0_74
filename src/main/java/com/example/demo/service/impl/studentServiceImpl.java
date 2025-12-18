@@ -35,4 +35,6 @@ public class studentServiceImpl implements studentService {
 
     }
 
+    public studentEntity getbyId(Long id);
+
 }
